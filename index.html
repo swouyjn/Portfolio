@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alexia Atachao Bejar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="#">i08swhy ✦</a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#projects">work</a></li>
+      <li><a href="photos.html">photos</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero" id="home">
+    <div class="hero-content fade-up">
+      <p class="hero-eyebrow">Secondary Education: Mathemathics · uiuc</p>
+      <h1>hi, i'm <span class="name">Alexia<br>Atachao Bejar.</span><span class="cursor">_</span></h1>
+      <p class="tagline">love math & microcontrollers. if it blinks, beeps, or runs; let's build it :P</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">my projects</a>
+        <a href="#about" class="btn btn-ghost">about me</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="star-field">
+        <span class="star s1">✦</span>
+        <span class="star s2">★</span>
+        <span class="star s3">✦</span>
+        <span class="star s4">✦</span>
+        <span class="star s5">★</span>
+        <span class="star s6">✦</span>
+        <span class="star s7">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ── -->
+  <section id="about" class="fade-up">
+    <p class="section-label">✦ about</p>
+    <p>grew up in peru obsessed with math. coming to the US as a junior in high school and ended up in UIUC with a passion in engineering.</p>
+    <p>microcontrollers are my thing. that moment when a physical sensor responds to something real — water dripping, a rep counted, a signal caught — nothing digital-only comes close. i think hardware first, then figure out the software that gives it meaning.</p>
+    <p>i care a lot about making things that actually work for real people. if it's annoying to use, or looks bad, or solves a fake problem — it's not done.</p>
+  </section>
+
+  <!-- ── Projects ── -->
+  <section id="projects" class="fade-up">
+    <p class="section-label">✦ work</p>
+    <div class="projects-grid">
+
+      <article class="project-card" data-index="0">
+        <a class="card-header" href="gpa-tracker.html">
+          <div class="card-meta">
+            <span class="card-number">01</span>
+            <div class="card-right">
+              <span class="card-tag">Java · Android Studio</span>
+              <span class="card-chevron">→</span>
+            </div>
+          </div>
+          <h3>GPA Tracker</h3>
+          <p class="problem">no app tracked grades the way a student actually needs — syllabus logic, drops, categories, goals. so i built it.</p>
+        </a>
+      </article>
+
+      <article class="project-card" data-index="1">
+        <a class="card-header" href="water-monitor.html">
+          <div class="card-meta">
+            <span class="card-number">02</span>
+            <div class="card-right">
+              <span class="card-tag">Hardware · Arduino · C++</span>
+              <span class="card-chevron">→</span>
+            </div>
+          </div>
+          <h3>Microcontroller Water Monitor</h3>
+          <p class="problem">my fridge was leaking. i built a sensor system to catch it before it became a real problem.</p>
+        </a>
+      </article>
+
+      <article class="project-card" data-index="2">
+        <a class="card-header" href="reps-recipes.html">
+          <div class="card-meta">
+            <span class="card-number">03</span>
+            <div class="card-right">
+              <span class="card-tag">Kotlin · HTML · Python  · Android Studio</span>
+              <span class="card-chevron">→</span>
+            </div>
+          </div>
+          <h3>Reps &amp; Recipes</h3>
+          <p class="problem">uiuc students needed help eating well and staying active. i built a rep-counter module as part of a team of four.</p>
+        </a>
+      </article>
+
+      <article class="project-card" data-index="3">
+        <button class="card-header" aria-expanded="false">
+          <div class="card-meta">
+            <span class="card-number">04</span>
+            <div class="card-right">
+              <span class="card-tag">Hardware · Summer 2026</span>
+              <span class="card-chevron">↓</span>
+            </div>
+          </div>
+          <h3>Robotic Hand</h3>
+          <p class="problem">what i'm building next.</p>
+        </button>
+        <div class="card-detail" hidden>
+          <div class="beat-grid">
+            <div class="beat-block">
+              <span class="beat-label">problem</span>
+              <p><!-- what's motivating this --></p>
+            </div>
+            <div class="beat-block">
+              <span class="beat-label">status</span>
+              <p>coming up this summer.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── Now ── -->
+  <section id="now" class="fade-up">
+    <p class="section-label">✦ now</p>
+    <p class="now-text"><!-- 2–3 sentences: what you're working on, thinking about, or excited by right now --></p>
+    <div class="spotify-widget" id="now-playing">
+      <div class="spotify-placeholder">
+        <div class="eq-bars">
+          <span class="bar b1"></span>
+          <span class="bar b2"></span>
+          <span class="bar b3"></span>
+          <span class="bar b4"></span>
+          <span class="bar b5"></span>
+        </div>
+        <div class="spotify-text">
+          <p class="spotify-label">currently listening</p>
+          <p class="spotify-hint" id="np-hint">loading...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section id="contact" class="fade-up">
+    <p class="section-label">✦ contact</p>
+    <p class="contact-line">if you have something cool going on, i want to hear about it.</p>
+    <div class="contact-links">
+      <a href="mailto:alexiaa3@illinois.edu">alexiaa3@illinois.edu</a>
+      <a href="https://github.com/swouyjn" target="_blank" rel="noopener">github</a>
+      <a href="https://linkedin.com/in/alexia-atachao" target="_blank" rel="noopener">linkedin</a>
+    </div>
+  </section>
+
+  <footer>
+    alexia atachao bejar · 2026 ✦
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

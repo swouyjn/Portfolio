@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Tests</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d0d0f;
+      color: #f0f0f0;
+      font-family: 'Space Mono', monospace, monospace;
+      font-size: 0.85rem;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      color: #8b69d6;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 0.7rem;
+      margin-bottom: 2rem;
+    }
+
+    .suite {
+      margin-bottom: 2rem;
+    }
+
+    .suite-name {
+      font-size: 0.7rem;
+      color: #8b69d6;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid #1e1e2e;
+    }
+
+    .test {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.35rem 0;
+    }
+
+    .icon { flex-shrink: 0; }
+    .pass .icon { color: #4ade80; }
+    .fail .icon { color: #f87171; }
+    .skip .icon { color: #555; }
+
+    .test-name { flex: 1; }
+    .pass .test-name { color: #d1fae5; }
+    .fail .test-name { color: #fecaca; }
+    .skip .test-name { color: #555; }
+
+    .test-detail {
+      font-size: 0.7rem;
+      color: #f87171;
+      margin-top: 0.2rem;
+      padding-left: 1.4rem;
+    }
+
+    .summary {
+      margin-top: 2rem;
+      padding: 1rem 1.25rem;
+      background: #111118;
+      border: 1px solid #1e1e2e;
+      border-radius: 8px;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .summary-pass { color: #4ade80; }
+    .summary-fail { color: #f87171; }
+    .summary-total { color: #555; }
+
+    .running { color: #555; font-size: 0.75rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+  <h1>✦ portfolio tests</h1>
+  <p class="subtitle">open this file in the browser to run — no install needed</p>
+  <p class="running" id="status">running...</p>
+  <div id="output"></div>
+  <div class="summary" id="summary" style="display:none">
+    <span class="summary-pass" id="s-pass"></span>
+    <span class="summary-fail" id="s-fail"></span>
+    <span class="summary-total" id="s-total"></span>
+  </div>
+
+  <script>
+    const output = document.getElementById('output');
+    let passed = 0, failed = 0;
+
+    function suite(name, fn) {
+      const wrap = document.createElement('div');
+      wrap.className = 'suite';
+      wrap.innerHTML = `<p class="suite-name">${name}</p>`;
+      output.appendChild(wrap);
+      fn(wrap);
+    }
+
+    function test(wrap, name, fn) {
+      const row = document.createElement('div');
+      try {
+        const result = fn();
+        if (result && result.then) {
+          result.then(() => {
+            row.className = 'test pass';
+            row.innerHTML = `<span class="icon">✓</span><span class="test-name">${name}</span>`;
+            passed++;
+            updateSummary();
+          }).catch(e => {
+            row.className = 'test fail';
+            row.innerHTML = `<span class="icon">✗</span><span class="test-name">${name}</span>`;
+            if (e.message) row.innerHTML += `<div class="test-detail">${e.message}</div>`;
+            failed++;
+            updateSummary();
+          });
+          row.className = 'test skip';
+          row.innerHTML = `<span class="icon">…</span><span class="test-name">${name}</span>`;
+        } else {
+          row.className = 'test pass';
+          row.innerHTML = `<span class="icon">✓</span><span class="test-name">${name}</span>`;
+          passed++;
+          updateSummary();
+        }
+      } catch (e) {
+        row.className = 'test fail';
+        row.innerHTML = `<span class="icon">✗</span><span class="test-name">${name}</span>`;
+        if (e.message) row.innerHTML += `<div class="test-detail">${e.message}</div>`;
+        failed++;
+        updateSummary();
+      }
+      wrap.appendChild(row);
+    }
+
+    function assert(condition, msg) {
+      if (!condition) throw new Error(msg || 'assertion failed');
+    }
+
+    function updateSummary() {
+      const total = passed + failed;
+      document.getElementById('s-pass').textContent = `${passed} passed`;
+      document.getElementById('s-fail').textContent = `${failed} failed`;
+      document.getElementById('s-total').textContent = `${total} total`;
+      document.getElementById('summary').style.display = 'flex';
+      document.getElementById('status').textContent = failed === 0
+        ? '✓ all tests passed'
+        : `✗ ${failed} test${failed > 1 ? 's' : ''} failed`;
+      document.getElementById('status').style.color = failed === 0 ? '#4ade80' : '#f87171';
+    }
+
+    async function loadPage(path) {
+      const res = await fetch(path);
+      if (!res.ok) throw new Error(`${path} returned ${res.status}`);
+      const text = await res.text();
+      const parser = new DOMParser();
+      return parser.parseFromString(text, 'text/html');
+    }
+
+    // ── run all tests ──
+    async function run() {
+
+      // load all pages upfront
+      let index, gpa, water, reps;
+      try {
+        [index, gpa, water, reps] = await Promise.all([
+          loadPage('index.html'),
+          loadPage('gpa-tracker.html'),
+          loadPage('water-monitor.html'),
+          loadPage('reps-recipes.html'),
+        ]);
+      } catch (e) {
+        document.getElementById('status').textContent = '✗ could not load pages — open via a local server (right-click index.html → Open With → browser)';
+        document.getElementById('status').style.color = '#f87171';
+        return;
+      }
+
+      suite('pages load', wrap => {
+        test(wrap, 'index.html loads', () => assert(index, 'missing'));
+        test(wrap, 'gpa-tracker.html loads', () => assert(gpa, 'missing'));
+        test(wrap, 'water-monitor.html loads', () => assert(water, 'missing'));
+        test(wrap, 'reps-recipes.html loads', () => assert(reps, 'missing'));
+      });
+
+      suite('index — structure', wrap => {
+        test(wrap, 'has <nav>', () => assert(index.querySelector('nav'), 'nav missing'));
+        test(wrap, 'has logo link', () => assert(index.querySelector('.logo'), '.logo missing'));
+        test(wrap, 'has hero section', () => assert(index.querySelector('.hero'), '.hero missing'));
+        test(wrap, 'has h1', () => assert(index.querySelector('h1'), 'h1 missing'));
+        test(wrap, 'has about section', () => assert(index.querySelector('#about'), '#about missing'));
+        test(wrap, 'has projects section', () => assert(index.querySelector('#projects'), '#projects missing'));
+        test(wrap, 'has contact section', () => assert(index.querySelector('#contact'), '#contact missing'));
+        test(wrap, 'has footer', () => assert(index.querySelector('footer'), 'footer missing'));
+      });
+
+      suite('index — content', wrap => {
+        test(wrap, 'name is in h1', () => {
+          const h1 = index.querySelector('h1');
+          assert(h1 && h1.textContent.toLowerCase().includes('alexia'), 'name not found in h1');
+        });
+        test(wrap, 'email link exists', () => {
+          const email = index.querySelector('a[href^="mailto:"]');
+          assert(email, 'mailto link missing');
+        });
+        test(wrap, 'github link exists', () => {
+          const gh = index.querySelector('a[href*="github"]');
+          assert(gh, 'github link missing');
+        });
+        test(wrap, 'linkedin link exists', () => {
+          const li = index.querySelector('a[href*="linkedin"]');
+          assert(li, 'linkedin link missing');
+        });
+        test(wrap, 'about section has text', () => {
+          const about = index.querySelector('#about');
+          assert(about && about.textContent.trim().length > 50, 'about section is empty');
+        });
+      });
+
+      suite('index — project cards', wrap => {
+        const cards = index.querySelectorAll('.project-card');
+        test(wrap, 'has 4 project cards', () => assert(cards.length === 4, `found ${cards.length}, expected 4`));
+        test(wrap, 'card 01 links to gpa-tracker.html', () => {
+          const link = index.querySelector('.project-card:nth-child(1) a.card-header');
+          assert(link && link.href.includes('gpa-tracker.html'), `href is: ${link && link.href}`);
+        });
+        test(wrap, 'card 02 links to water-monitor.html', () => {
+          const link = index.querySelector('.project-card:nth-child(2) a.card-header');
+          assert(link && link.href.includes('water-monitor.html'), `href is: ${link && link.href}`);
+        });
+        test(wrap, 'card 03 links to reps-recipes.html', () => {
+          const link = index.querySelector('.project-card:nth-child(3) a.card-header');
+          assert(link && link.href.includes('reps-recipes.html'), `href is: ${link && link.href}`);
+        });
+        test(wrap, 'card 04 is a button (expand)', () => {
+          const btn = index.querySelector('.project-card:nth-child(4) button.card-header');
+          assert(btn, 'card 04 should be a button not a link');
+        });
+        test(wrap, 'all cards have h3 titles', () => {
+          cards.forEach((c, i) => assert(c.querySelector('h3'), `card ${i+1} missing h3`));
+        });
+      });
+
+      suite('project pages — structure', wrap => {
+        [['gpa-tracker.html', gpa], ['water-monitor.html', water], ['reps-recipes.html', reps]].forEach(([name, doc]) => {
+          test(wrap, `${name} has back link`, () => {
+            const back = doc.querySelector('.back-link');
+            assert(back, '.back-link missing');
+            assert(back.href.includes('index.html'), 'back link does not point to index.html');
+          });
+          test(wrap, `${name} has h1`, () => assert(doc.querySelector('h1'), 'h1 missing'));
+          test(wrap, `${name} has project-lead`, () => assert(doc.querySelector('.project-lead'), '.project-lead missing'));
+          test(wrap, `${name} has nav`, () => assert(doc.querySelector('nav'), 'nav missing'));
+        });
+      });
+
+      suite('css — style.css loads', wrap => {
+        test(wrap, 'style.css is linked on index', () => {
+          const link = index.querySelector('link[href="style.css"]');
+          assert(link, 'style.css not linked');
+        });
+        test(wrap, 'style.css is linked on gpa-tracker', () => {
+          const link = gpa.querySelector('link[href="style.css"]');
+          assert(link, 'style.css not linked');
+        });
+      });
+
+      suite('fonts', wrap => {
+        test(wrap, 'Google Fonts loaded on index', () => {
+          const fonts = index.querySelector('link[href*="fonts.googleapis"]');
+          assert(fonts, 'Google Fonts link missing');
+        });
+        test(wrap, 'Syne font requested', () => {
+          const fonts = index.querySelector('link[href*="Syne"]');
+          assert(fonts, 'Syne not in font URL');
+        });
+        test(wrap, 'Space Mono font requested', () => {
+          const fonts = index.querySelector('link[href*="Space+Mono"]');
+          assert(fonts, 'Space Mono not in font URL');
+        });
+      });
+
+    }
+
+    run();
+  </script>
+</body>
+</html>
