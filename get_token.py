@@ -9,7 +9,7 @@ import json
 CLIENT_ID     = "5c09d065545f4e4b89ea66ceeea92b74"
 CLIENT_SECRET = "587810c055e24268842edaa097991194"
 REDIRECT_URI  = "http://127.0.0.1:8888/callback"
-SCOPE         = "user-read-currently-playing"
+SCOPE         = "user-read-currently-playing user-read-recently-played"
 
 auth_code = None
 

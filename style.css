@@ -306,6 +306,11 @@ section {
   50%       { height: 24px; }
 }
 
+.eq-bars.paused .bar {
+  animation: none;
+  height: 6px;
+}
+
 .spotify-text {
   display: flex;
   flex-direction: column;

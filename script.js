@@ -16,19 +16,21 @@ async function loadNowPlaying() {
   try {
     const res = await fetch('/api/now-playing');
     const data = await res.json();
-    if (!data.isPlaying) {
+    if (!data.isPlaying && !data.lastPlayed) {
       document.getElementById('np-hint').textContent = 'not playing right now';
       return;
     }
+    const label = data.isPlaying ? 'currently listening' : 'last played';
     widget.innerHTML = `
       <a class="np-card" href="${data.songUrl}" target="_blank" rel="noopener">
         <img class="np-art" src="${data.albumArt}" alt="${data.album}">
         <div class="np-info">
-          <div class="eq-bars">
+          <div class="eq-bars ${data.isPlaying ? '' : 'paused'}">
             <span class="bar b1"></span><span class="bar b2"></span>
             <span class="bar b3"></span><span class="bar b4"></span>
             <span class="bar b5"></span>
           </div>
+          <p class="spotify-label">${label}</p>
           <p class="np-title">${data.title}</p>
           <p class="np-artist">${data.artist}</p>
         </div>

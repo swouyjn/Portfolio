@@ -8,13 +8,13 @@ export default async function handler(req, res) {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  if (response.status === 204 || response.status > 400) {
-    return res.status(200).json({ isPlaying: false });
+  if (response.status === 204 || response.status > 400 || !response.ok) {
+    return res.status(200).json(await getRecentlyPlayed(token));
   }
 
   const data = await response.json();
 
-  if (!data.item) return res.status(200).json({ isPlaying: false });
+  if (!data.item) return res.status(200).json(await getRecentlyPlayed(token));
 
   return res.status(200).json({
     isPlaying:  data.is_playing,
@@ -24,6 +24,25 @@ export default async function handler(req, res) {
     albumArt:   data.item.album.images[0]?.url,
     songUrl:    data.item.external_urls.spotify,
   });
+}
+
+async function getRecentlyPlayed(token) {
+  const response = await fetch("https://api.spotify.com/v1/me/player/recently-played?limit=1", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) return { isPlaying: false };
+  const data = await response.json();
+  const track = data.items?.[0]?.track;
+  if (!track) return { isPlaying: false };
+  return {
+    isPlaying:  false,
+    lastPlayed: true,
+    title:      track.name,
+    artist:     track.artists.map(a => a.name).join(", "),
+    album:      track.album.name,
+    albumArt:   track.album.images[0]?.url,
+    songUrl:    track.external_urls.spotify,
+  };
 }
 
 async function getAccessToken() {
