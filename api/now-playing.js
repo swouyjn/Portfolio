@@ -18,6 +18,7 @@ export default async function handler(req, res) {
 
   return res.status(200).json({
     isPlaying:  data.is_playing,
+    lastPlayed: !data.is_playing,
     title:      data.item.name,
     artist:     data.item.artists.map(a => a.name).join(", "),
     album:      data.item.album.name,
