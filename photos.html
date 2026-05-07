@@ -12,7 +12,7 @@
 <body>
 
   <nav>
-    <a class="logo" href="index.html">aab ✦</a>
+    <a class="logo" href="index.html">i08swhy ✦</a>
     <ul class="nav-links">
       <li><a href="index.html#about">about</a></li>
       <li><a href="index.html#projects">work</a></li>
@@ -29,13 +29,20 @@
     </header>
 
     <div class="photos-grid fade-up">
-      <!-- replace each photo-slot with <img src="your-photo.jpg" alt="description"> when ready -->
-      <div class="photo-slot placeholder-photo"></div>
-      <div class="photo-slot placeholder-photo"></div>
-      <div class="photo-slot placeholder-photo"></div>
-      <div class="photo-slot placeholder-photo"></div>
-      <div class="photo-slot placeholder-photo"></div>
-      <div class="photo-slot placeholder-photo"></div>
+      <div class="photo-slot"><img src="pictures/682671517_850639807431142_6890199829266685208_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/692867153_1319057003442610_7630822838706821771_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/682705939_1877765796514735_5445609436528291673_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/688899989_1258414473128614_360538862366786432_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/681943220_1394231409138135_9199968312234403899_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/688055281_1263212472641765_3750555541796984929_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/686506575_1696463318024749_3968869800639547883_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/more pressure testing.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/683346455_1620862642457571_843850174500766358_n.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/new set.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/welding.jpg" alt=""></div>
+      <div class="photo-slot"><img src="pictures/fsae eoh.jpg" alt=""></div>
+      <div class="photo-slot"><img src="water sensor real.jpg" alt="Water sensor hardware"></div>
+      <div class="photo-slot"><img src="Water sensor plan.jpg" alt="Water sensor wiring diagram"></div>
     </div>
 
   </div>
@@ -44,6 +51,28 @@
     alexia atachao bejar · 2026 ✦
   </footer>
 
+  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;cursor:zoom-out;">
+    <img id="lightbox-img" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain;">
+  </div>
+
   <script src="script.js"></script>
+  <script>
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.photo-slot img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lb.style.display = 'flex';
+      });
+    });
+
+    lb.addEventListener('click', () => {
+      lb.style.display = 'none';
+      lbImg.src = '';
+    });
+  </script>
 </body>
 </html>

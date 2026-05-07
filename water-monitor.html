@@ -12,7 +12,7 @@
 <body>
 
   <nav>
-    <a class="logo" href="index.html">aab ✦</a>
+    <a class="logo" href="index.html">i08swhy ✦</a>
     <ul class="nav-links">
       <li><a href="index.html#about">about</a></li>
       <li><a href="index.html#projects">work</a></li>
@@ -31,39 +31,45 @@
         <span class="card-tag">C++</span>
       </div>
       <h1>Microcontroller Water Monitor</h1>
-      <p class="project-lead">my fridge was leaking. i built a sensor system to catch it before it became a real problem.</p>
+      <p class="project-lead">My fridge was leaking water, so I built a sensor system to catch it before I had a flood in my dorm.</p>
     </header>
 
-    <div class="img-placeholder fade-up">
-      <span>hardware photos coming soon</span>
+    <div class="fade-up">
+      <img src="water sensor real.jpg" alt="Water sensor hardware photo" style="width:100%;border-radius:8px;">
     </div>
 
     <div class="project-sections fade-up">
 
       <div class="project-block">
-        <p class="section-label">✦ problem</p>
-        <p>my fridge was leaking onto the floor — the kind of slow drip you don't notice until there's real damage. i wanted an early warning system instead of discovering it by stepping in a puddle. also became the basis for a broader research paper on how microcontroller-based solutions could help underserved communities detect and prevent water damage.</p>
+        <p class="section-label">✦ Problem</p>
+        <p>During my first days in University Housing my fridge broke down and started leaking water. This is why, with my little prior knowledge in microcontrollers, I built a low-cost device that detects water level in the drainage tray and alerts me before it spills. </p>
+        <p>This later on became the basis for a broader research paper on the potential of microcontroller-based technologies in underserved communities </p>
       </div>
 
       <div class="project-block">
-        <p class="section-label">✦ thinking</p>
-        <p><!-- how did you approach this? what sensor logic, thresholds, alerts? --></p>
+        <p class="section-label">✦ Design</p>
+        <p><!-- how did you approach this? what sensor logic, thresholds, alerts? -->I approached this problem by breaking it down into a simple embedded system where I needed an input to detect the water, a microcontroller to process the signal, and an output to communicate the result.</p>
+        <p><p>
+        <p>Before building the final version, I tested different threshold values and adjusted them based on inconsistent sensor readings caused by noise and water conductivity variation.</p>
       </div>
 
       <div class="project-block">
-        <p class="section-label">✦ built</p>
-        <p>a microcontroller-based water leak detection system using arduino and water/moisture sensors. the system monitors for leaks and triggers an alert when water is detected. also the subject of an isp research paper exploring real-world applications of microcontrollers in underserved communities.</p>
+        <p class="section-label">✦ Implementation</p>
+        <p>The system was implemented using an Arduino to read analog values from a water level sensor. The sensor outputs a variable signal, which is read through an analog pin and interpreted using threshold-based logic to classify water levels as low, medium, or high.</p>
+        <p>A 16x2 LCD display shows the current status in real time, while an LED provides a visual alert when levels become critical.</p>
+        <p>The system continuously updates readings in a loop, allowing for simple real-time monitoring.</p>
       </div>
 
       <div class="project-block">
-        <p class="section-label">✦ learned</p>
-        <p><!-- what surprised you? what would you do differently? --></p>
+        <p class="section-label">✦ What I learned</p>
+        <p><!-- what surprised you? what would you do differently? -->Real world sensor data is rarely stable and often requires interpretation rather than direct reading. Small variations in environment and conductivity can affect readings, which made the threshold selection and testing an important part of the project.</p>
+        <p>If I were to extend this porject, I would implement wireless communication using a second microcontroller to send real time notifications to youer own phone. I would also explore powering the system with a battery for portability, although I realized that continuous sensor reading and LCD usage would significantly reduce battery life, making power efficiency a design constrain.</p>
       </div>
 
     </div>
 
-    <div class="img-placeholder fade-up">
-      <span>circuit diagram / setup photos coming soon</span>
+    <div class="fade-up">
+      <img src="Water sensor plan.jpg" alt="Water sensor wiring diagram — Arduino Uno connected to a water sensor module and 1602 LCD via I2C" style="width:100%;border-radius:8px;">
     </div>
 
     <div class="project-nav fade-up">
